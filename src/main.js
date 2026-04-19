@@ -161,8 +161,13 @@ function init() {
   const bank = document.getElementById('nickname-bank');
   const generateBtn = document.getElementById('generate-btn');
 
-  // Populate bank with starter nickname cards
-  starterNicknames.forEach((nick) => {
+  // Populate bank with a mix of random nicknames and some classics
+  const initialNicks = [
+    ...starterNicknames.sort(() => 0.5 - Math.random()).slice(0, 8),
+    ...generateBatch(8)
+  ];
+  
+  initialNicks.forEach((nick) => {
     bank.appendChild(createCard(nick));
   });
 
