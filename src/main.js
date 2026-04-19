@@ -1,24 +1,88 @@
 import './style.css';
 
-const nicknames = [
-  { id: 'n1', text: '🚽 Skibidi Lenka', emoji: '🚽' },
-  { id: 'n2', text: '😤 Sigma Lenulinka', emoji: '😤' },
-  { id: 'n3', text: '🎤 Lenka Rizzlerka', emoji: '🎤' },
-  { id: 'n4', text: '🍑 Gyatt Lenička', emoji: '🍑' },
-  { id: 'n5', text: '🌀 Ohio Boss Lenka', emoji: '🌀' },
-  { id: 'n6', text: '🦷 Mewing Lenka', emoji: '🦷' },
-  { id: 'n7', text: '😈 Fanum Tax Lenka', emoji: '😈' },
-  { id: 'n8', text: '💜 Grimace Shake Lenka', emoji: '💜' },
-  { id: 'n9', text: '🧠 Brainrot Lenka', emoji: '🧠' },
-  { id: 'n10', text: '👁️ Lenka Delulu', emoji: '👁️' },
-  { id: 'n11', text: '🦅 No Cap Lenka', emoji: '🦅' },
-  { id: 'n12', text: '🔥 Rizz Goddess Lenka', emoji: '🔥' },
-  { id: 'n13', text: '💀 Sus Lenka', emoji: '💀' },
-  { id: 'n14', text: '🐺 Alpha Lenka Fr Fr', emoji: '🐺' },
-  { id: 'n15', text: '🪬 Bereal Lenka', emoji: '🪬' },
-  { id: 'n16', text: '🏆 Goat Lenka', emoji: '🏆' },
+// === SKIBIDI NAME GENERATOR ===
+const prefixes = [
+  'Skibidi', 'Sigma', 'Gyatt', 'Ohio', 'Mewing', 'Fanum Tax',
+  'Grimace Shake', 'Brainrot', 'Rizz', 'No Cap', 'Sus', 'Alpha',
+  'Delulu', 'Slay', 'Bussin', 'Lit', 'Vibe Check', 'Yeet',
+  'Ratio', 'NPC', 'Goated', 'Based', 'Cringe', 'Oof',
+  'Drip', 'Lowkey', 'Highkey', 'Deadass', 'Simp', 'W',
+  'L', 'Bing Chilling', 'Amogus', 'Jellyfish', 'Goofy Ahh',
+  'Sussy Baka', 'Ice Spice', 'Baby Gronk', 'Livvy Dunne',
+  'Duke Dennis', 'Kai Cenat', 'Hawk Tuah', 'Glaze',
 ];
 
+const names = [
+  'Lenka', 'Lenička', 'Lenulinka', 'Lenuše', 'Lenísek',
+  'Lenčí', 'Lenďa', 'Lena', 'Leňour', 'Lenkorino',
+  'Lenkoid', 'Lenkosaurus', 'Lenkinator', 'Lenkovice',
+  'Lenkuška', 'Leniščka', 'Lenčura', 'Lentáček',
+];
+
+const suffixes = [
+  '', '', '', '', // empty suffixes are common (weighted)
+  'Rizzlerka', 'Boss', 'Queen', 'Goat', 'Sensei',
+  'Ultra', 'Deluxe', 'Supreme', 'Fr Fr', 'No Cap',
+  'XL', 'Pro Max', 'Turbo', '3000', 'Prime',
+  'Vibes', 'Core', 'Maxxing', 'Era',
+];
+
+const emojis = [
+  '🚽', '😤', '🎤', '🍑', '🌀', '🦷', '😈', '💜', '🧠', '👁️',
+  '🦅', '🔥', '💀', '🐺', '🪬', '🏆', '✨', '👑', '💅', '🤯',
+  '🫠', '🥶', '🤡', '😎', '🦈', '🎭', '⚡', '🌶️', '🧊', '💎',
+];
+
+function randomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+let idCounter = 0;
+
+function generateNickname() {
+  const prefix = randomItem(prefixes);
+  const name = randomItem(names);
+  const suffix = randomItem(suffixes);
+  const emoji = randomItem(emojis);
+  const text = suffix ? `${emoji} ${prefix} ${name} ${suffix}` : `${emoji} ${prefix} ${name}`;
+  idCounter++;
+  return { id: `gen-${idCounter}`, text };
+}
+
+function generateBatch(count = 8) {
+  const batch = [];
+  const seen = new Set();
+  while (batch.length < count) {
+    const nick = generateNickname();
+    if (!seen.has(nick.text)) {
+      seen.add(nick.text);
+      batch.push(nick);
+    }
+  }
+  return batch;
+}
+
+// === ORIGINAL STARTER NICKNAMES ===
+const starterNicknames = [
+  { id: 'n1', text: '🚽 Skibidi Lenka' },
+  { id: 'n2', text: '😤 Sigma Lenulinka' },
+  { id: 'n3', text: '🎤 Lenka Rizzlerka' },
+  { id: 'n4', text: '🍑 Gyatt Lenička' },
+  { id: 'n5', text: '🌀 Ohio Boss Lenka' },
+  { id: 'n6', text: '🦷 Mewing Lenka' },
+  { id: 'n7', text: '😈 Fanum Tax Lenka' },
+  { id: 'n8', text: '💜 Grimace Shake Lenka' },
+  { id: 'n9', text: '🧠 Brainrot Lenka' },
+  { id: 'n10', text: '👁️ Lenka Delulu' },
+  { id: 'n11', text: '🦅 No Cap Lenka' },
+  { id: 'n12', text: '🔥 Rizz Goddess Lenka' },
+  { id: 'n13', text: '💀 Sus Lenka' },
+  { id: 'n14', text: '🐺 Alpha Lenka Fr Fr' },
+  { id: 'n15', text: '🪬 Bereal Lenka' },
+  { id: 'n16', text: '🏆 Goat Lenka' },
+];
+
+// === DRAG & DROP ===
 let draggingCard = null;
 
 function createCard(nickname) {
@@ -81,7 +145,6 @@ function getDragAfterElement(container, x, y) {
       const box = child.getBoundingClientRect();
       const offsetX = x - box.left - box.width / 2;
       const offsetY = y - box.top - box.height / 2;
-      // Prefer horizontal positioning but fall back to vertical
       const offset = Math.abs(offsetX) < box.width ? offsetX : offsetY;
       if (offset < 0 && offset > closest.offset) {
         return { offset, element: child };
@@ -93,16 +156,32 @@ function getDragAfterElement(container, x, y) {
   ).element;
 }
 
+// === INIT ===
 function init() {
   const bank = document.getElementById('nickname-bank');
+  const generateBtn = document.getElementById('generate-btn');
 
-  // Populate bank with nickname cards
-  nicknames.forEach((nick) => {
+  // Populate bank with starter nickname cards
+  starterNicknames.forEach((nick) => {
     bank.appendChild(createCard(nick));
   });
 
   // Setup all dropzones (tier rows + bank)
   document.querySelectorAll('[data-dropzone="true"]').forEach(setupDropzone);
+
+  // Generate button - adds new random nicknames to the bank
+  generateBtn.addEventListener('click', () => {
+    const newNicks = generateBatch(6);
+    newNicks.forEach((nick) => {
+      const card = createCard(nick);
+      card.style.animation = 'popIn 0.3s ease-out';
+      bank.appendChild(card);
+    });
+
+    // Button animation
+    generateBtn.classList.add('btn-clicked');
+    setTimeout(() => generateBtn.classList.remove('btn-clicked'), 300);
+  });
 }
 
 init();
