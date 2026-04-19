@@ -191,6 +191,14 @@ header p {
   transform: scale(0.95);
 }
 
+.nickname-card.selected-card {
+  border: 2px solid #ec4899;
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
+  transform: scale(1.05);
+  background: var(--card-hover);
+  z-index: 10;
+}
+
 .dropzone-active {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 0 15px rgba(255,255,255,0.05);

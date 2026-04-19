@@ -82,8 +82,16 @@ const starterNicknames = [
   { id: 'n16', text: '🏆 Goat Lenka' },
 ];
 
-// === DRAG & DROP ===
+// === INTERACTION STATE ===
 let draggingCard = null;
+let selectedCard = null;
+
+function deselectCard() {
+  if (selectedCard) {
+    selectedCard.classList.remove('selected-card');
+    selectedCard = null;
+  }
+}
 
 function createCard(nickname) {
   const card = document.createElement('div');
@@ -92,7 +100,9 @@ function createCard(nickname) {
   card.setAttribute('data-id', nickname.id);
   card.textContent = nickname.text;
 
+  // Drag logic
   card.addEventListener('dragstart', (e) => {
+    deselectCard();
     draggingCard = card;
     setTimeout(() => card.classList.add('dragging'), 0);
     e.dataTransfer.effectAllowed = 'move';
@@ -104,10 +114,23 @@ function createCard(nickname) {
     draggingCard = null;
   });
 
+  // Click-to-Move logic (The "From" part)
+  card.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (selectedCard === card) {
+      deselectCard();
+    } else {
+      deselectCard();
+      selectedCard = card;
+      card.classList.add('selected-card');
+    }
+  });
+
   return card;
 }
 
 function setupDropzone(zone) {
+  // Drag over
   zone.addEventListener('dragover', (e) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
@@ -132,6 +155,14 @@ function setupDropzone(zone) {
   zone.addEventListener('drop', (e) => {
     e.preventDefault();
     zone.classList.remove('dropzone-active');
+  });
+
+  // Click-to-Move logic (The "To" part)
+  zone.addEventListener('click', () => {
+    if (selectedCard) {
+      zone.appendChild(selectedCard);
+      deselectCard();
+    }
   });
 }
 
@@ -174,9 +205,18 @@ function init() {
   // Setup all dropzones (tier rows + bank)
   document.querySelectorAll('[data-dropzone="true"]').forEach(setupDropzone);
 
-  // Generate button - adds new random nicknames to the bank
-  generateBtn.addEventListener('click', () => {
-    const newNicks = generateBatch(6);
+  // Global click to deselect if clicking outside
+  document.addEventListener('click', () => deselectCard());
+
+  // Generate button - REPLACES random nicknames in the bank
+  generateBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    deselectCard();
+    
+    // Clear the bank
+    bank.innerHTML = '';
+    
+    const newNicks = generateBatch(10); // Generujeme trochu víc, když už nahrazujeme
     newNicks.forEach((nick) => {
       const card = createCard(nick);
       card.style.animation = 'popIn 0.3s ease-out';
