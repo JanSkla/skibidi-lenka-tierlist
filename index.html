@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skibidi Lenka Tierlist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Skibidi Lenka Tierlist 🚽✨</h1>
+        <p>Zařaď ty nejlepší brainrot přezdívky do tierů!</p>
+      </header>
+
+      <main class="tierlist-container">
+        <!-- Tier S -->
+        <div class="tier-row" data-tier="s">
+          <div class="tier-label s-tier">S</div>
+          <div class="tier-items" data-dropzone="true"></div>
+        </div>
+        <!-- Tier A -->
+        <div class="tier-row" data-tier="a">
+          <div class="tier-label a-tier">A</div>
+          <div class="tier-items" data-dropzone="true"></div>
+        </div>
+        <!-- Tier B -->
+        <div class="tier-row" data-tier="b">
+          <div class="tier-label b-tier">B</div>
+          <div class="tier-items" data-dropzone="true"></div>
+        </div>
+        <!-- Tier C -->
+        <div class="tier-row" data-tier="c">
+          <div class="tier-label c-tier">C</div>
+          <div class="tier-items" data-dropzone="true"></div>
+        </div>
+        <!-- Tier D -->
+        <div class="tier-row" data-tier="d">
+          <div class="tier-label d-tier">D</div>
+          <div class="tier-items" data-dropzone="true"></div>
+        </div>
+        <!-- Tier Skibidi -->
+        <div class="tier-row" data-tier="skibidi">
+          <div class="tier-label skibidi-tier">🚽</div>
+          <div class="tier-items" data-dropzone="true"></div>
+        </div>
+      </main>
+
+      <section class="bank-container">
+        <h2>Banka Přezdívek</h2>
+        <div class="bank-items" data-dropzone="true" id="nickname-bank">
+          <!-- Zde se vygenerují přezdívky pomocí JS -->
+        </div>
+      </section>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
